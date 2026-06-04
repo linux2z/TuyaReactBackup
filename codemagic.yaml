@@ -10,11 +10,21 @@ workflows:
       - name: Get Flutter packages
         script: |
           flutter packages pub get
-      - name: Build iOS app (Unsigned)
+      - name: Build iOS app (Unsigned for Sideloadly)
         script: |
-          # Building without code signing for now.
-          # To build a real .ipa for physical devices, you must configure Apple Developer certificates in Codemagic UI.
-          flutter build ios --release --no-codesign
+          # 1. Build flutter framework and iOS project (might fail at code signing, we allow it to fail using || true)
+          flutter build ios --release --no-codesign || true
+          
+          # 2. Force xcodebuild to build the release scheme without any code signing requirements
+          cd ios
+          xcodebuild build -workspace Runner.xcworkspace -scheme Runner -configuration Release -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+          cd ..
+          
+          # 3. Package the resulting .app into a Payload folder to create an unsigned .ipa for Sideloadly
+          mkdir -p build/ios/Payload
+          cp -r build/ios/iphoneos/Runner.app build/ios/Payload/
+          cd build/ios
+          zip -r -q ElenzaPro_Unsigned.ipa Payload
     artifacts:
       - build/ios/iphoneos/*.app
-      - build/ios/iphoneos/*.ipa
+      - build/ios/*.ipa
