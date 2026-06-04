@@ -12,6 +12,9 @@ workflows:
           flutter packages pub get
       - name: Build iOS app (Unsigned for Sideloadly)
         script: |
+          # Upgrade packages to fix Flutter 3.22+ compatibility issues
+          flutter pub upgrade
+          
           # 1. Build flutter framework and iOS project (might fail at code signing, we allow it to fail using || true)
           flutter build ios --release --no-codesign || true
           
