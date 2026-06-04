@@ -17,14 +17,13 @@ workflows:
           
           # 2. Force xcodebuild to build the release scheme without any code signing requirements
           cd ios
-          xcodebuild build -workspace Runner.xcworkspace -scheme Runner -configuration Release -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+          xcodebuild build -workspace Runner.xcworkspace -scheme Runner -configuration Release -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" SYMROOT=$(PWD)/build
           cd ..
           
           # 3. Package the resulting .app into a Payload folder to create an unsigned .ipa for Sideloadly
-          mkdir -p build/ios/Payload
-          cp -r build/ios/iphoneos/Runner.app build/ios/Payload/
-          cd build/ios
+          rm -rf Payload ElenzaPro_Unsigned.ipa
+          mkdir -p Payload
+          cp -r ios/build/Release-iphoneos/Runner.app Payload/
           zip -r -q ElenzaPro_Unsigned.ipa Payload
     artifacts:
-      - build/ios/iphoneos/*.app
-      - build/ios/*.ipa
+      - ElenzaPro_Unsigned.ipa
