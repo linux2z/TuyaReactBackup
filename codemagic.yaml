@@ -1,0 +1,20 @@
+workflows:
+  ios-flutter-build:
+    name: iOS Flutter Build (Elenza Pro)
+    working_directory: Elenza_Pro
+    environment:
+      flutter: default
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Build iOS app (Unsigned)
+        script: |
+          # Building without code signing for now.
+          # To build a real .ipa for physical devices, you must configure Apple Developer certificates in Codemagic UI.
+          flutter build ios --release --no-codesign
+    artifacts:
+      - build/ios/iphoneos/*.app
+      - build/ios/iphoneos/*.ipa
