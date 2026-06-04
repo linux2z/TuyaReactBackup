@@ -1,0 +1,35 @@
+# Proguard rules for ELENZA Tuya Mobile Application
+
+# React Native rules
+-keep class com.facebook.react.bridge.ReactMarker { *; }
+-keep class com.facebook.react.bridge.WritableNativeMap { *; }
+-keep class com.facebook.react.bridge.WritableNativeArray { *; }
+
+# Tuya SDK rules
+
+#fastJson
+-keep class com.alibaba.fastjson.**{*;}
+-dontwarn com.alibaba.fastjson.**
+
+#mqtt
+-keep class com.thingclips.smart.mqttclient.mqttv3.** { *; }
+-dontwarn com.thingclips.smart.mqttclient.mqttv3.**
+
+#OkHttp3
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+
+-keep class okio.** { *; }
+-dontwarn okio.**
+
+-keep class com.thingclips.**{*;}
+-dontwarn com.thingclips.**
+
+# Matter SDK
+-keep class chip.** { *; }
+-dontwarn chip.**
+
+#MINI SDK
+-keep class com.gzl.smart.** { *; }
+-dontwarn com.gzl.smart.**

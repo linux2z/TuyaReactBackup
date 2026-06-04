@@ -1,0 +1,7 @@
+-keep class com.thingclips.** { *; }
+-keep class com.google.android.play.core.** { *; }
+-keep class com.google.gson.** { *; }
+-keep class matter.** { *; }
+-dontwarn com.thingclips.**
+-dontwarn com.google.**
+-dontwarn matter.**

@@ -1,0 +1,12 @@
+node_modules/
+*.zip
+Android_SDK_extracted/
+jdk17/
+backup/
+old_backup/
+elenza_flutter_temp/
+.gradle/
+build/
+.dart_tool/
+temp_apk/
+temp_apk_assets/
