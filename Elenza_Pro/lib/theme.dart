@@ -126,7 +126,7 @@ class ElenzaTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: graphiteDark,
         elevation: 0,
         shape: RoundedRectangleBorder(
